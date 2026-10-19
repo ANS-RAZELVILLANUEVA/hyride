@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#251044">
+  <meta name="description" content="A sunset ride with a little surprise. Dodge traffic, reach 520, and open something made for Ali.">
+  <title>HYRIDE — A ride for Ali</title>
+  <link rel="icon" href="assets/sprites/gift_close.png" type="image/png">
+  <link rel="preload" as="image" href="assets/game_intro/intro.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="game" class="game" data-phase="intro" aria-label="HYRIDE mobile racing game">
+    <div id="road" class="road" aria-hidden="true"></div>
+    <div class="sky-vignette" aria-hidden="true"></div>
+    <div id="world" class="world" hidden aria-hidden="true">
+      <img id="finish" class="finish" src="assets/background/finish_line.png" alt="" hidden>
+      <div id="traffic"></div>
+      <img id="rider" class="rider" src="assets/big_bike/meric_bike_moving.gif" alt="">
+    </div>
+
+    <header class="topbar">
+      <span class="wordmark">H<span class="wordmark-slash">/</span><span>HYRIDE<small>FOR ALI</small></span></span>
+      <div class="top-actions">
+        <button id="pause" class="icon-button" type="button" aria-label="Pause race" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg></button>
+        <button id="sound" class="icon-button" type="button" aria-label="Mute audio" aria-pressed="false"><svg id="sound-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 5-6 5H2v4h3l6 5V5Zm4 3a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg></button>
+      </div>
+    </header>
+
+    <section id="intro" class="intro screen" aria-labelledby="intro-heading">
+      <h1 id="intro-heading" class="sr-only">HYRIDE — a ride for Ali</h1>
+      <p class="intro-kicker">A LITTLE RIDE. A LITTLE SURPRISE.</p>
+      <div class="intro-bottom">
+        <button id="start" class="art-button start-button" type="button" aria-label="Start race" disabled><img src="assets/ui/start_btn.png" alt="Start" width="1066" height="477"></button>
+        <p id="loading" class="tiny">Getting your ride ready…</p>
+      </div>
+    </section>
+
+    <section id="hud" class="hud" aria-label="Race progress" hidden>
+      <div class="score-row"><div><span class="eyebrow">YOUR SCORE</span><p class="score"><span id="score">000</span><span class="score-target"> / 520</span></p></div><span class="goal-chip"><span aria-hidden="true">⚑</span> THE SURPRISE</span></div>
+      <div class="progress-track" role="progressbar" aria-label="Score toward finish" aria-valuemin="0" aria-valuemax="520" aria-valuenow="0"><span id="progress"></span></div>
+      <p id="race-status" class="race-status">A sunset ride, just for you.</p>
+    </section>
+
+    <section id="instructions" class="instructions floating-card" aria-labelledby="instructions-heading" hidden>
+      <span class="eyebrow peach">BEFORE YOU RIDE</span>
+      <h2 id="instructions-heading">Chase the sunset.<br>Find your surprise.</h2>
+      <img class="instruction-art" src="assets/ui/intstructions.png" alt="Reach the score of 520 to see the surprise. Avoid obstacles using up and down controls. Good luck!">
+      <div class="instruction-row"><span class="instruction-arrows" aria-hidden="true">↑ ↓</span><p>Tap <strong>up</strong> or <strong>down</strong> to switch lanes.<br>Keep clear of traffic and potholes.</p></div>
+      <p class="instruction-note">Reach <strong>520 points</strong> to cross the finish line.<br>You’ll have 3 seconds to get ready.</p>
+      <button id="close-instructions" class="primary-button" type="button">Got it, let’s ride <span aria-hidden="true">→</span></button>
+    </section>
+
+    <div id="countdown" class="countdown" role="status" hidden><span class="eyebrow">GET READY</span><strong id="countdown-value">3</strong><p>Thumbs on the arrows.</p></div>
+    <div id="controls" class="controls" aria-label="Lane controls" hidden>
+      <button id="up" class="art-button lane-button" type="button" aria-label="Move to upper lane"><img src="assets/ui/button_up.png" alt="Up" draggable="false"></button>
+      <span class="controls-label">RIDE TO 520</span>
+      <button id="down" class="art-button lane-button" type="button" aria-label="Move to lower lane"><img src="assets/ui/button_down.png" alt="Down" draggable="false"></button>
+    </div>
+
+    <section id="lost" class="result-screen" aria-labelledby="lost-heading" hidden>
+      <div class="result-content"><span class="eyebrow peach">A BUMP IN THE ROAD</span><h2 id="lost-heading" class="sr-only">Game over</h2><img class="result-art" src="assets/ui/game_over.png" alt="Game over"><p class="result-score"><span id="final-score">0</span><small> / 520</small></p><p>So close to something special.<br>Take another ride?</p><button id="retry" class="art-button retry-button" type="button" aria-label="Try again"><img src="assets/ui/tryagain_btn.png" alt="Try again"></button><button class="text-button home-button" type="button">Back to the start</button></div>
+    </section>
+
+    <section id="gift-screen" class="gift-screen" aria-labelledby="gift-heading" hidden>
+      <span class="eyebrow peach">520 / 520 · FINISH LINE REACHED</span>
+      <h2 id="gift-heading" class="sr-only">Congratulations! Open your gift.</h2>
+      <img class="congrats-art" src="assets/ui/congrats.png" alt="Congratulations">
+      <p class="gift-message">Every good ride deserves<br>a little surprise.</p>
+      <button id="gift" class="art-button gift-button" type="button" aria-label="Tap gift, 3 taps to open"><span class="gift-glow" aria-hidden="true"></span><img id="gift-image" src="assets/sprites/gift_close.png" alt="A red gift with a gold ribbon"></button>
+      <p id="gift-caption" class="gift-caption">Tap the gift 3 times to open</p>
+      <div id="gift-dots" class="gift-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+    </section>
+
+    <section id="rewards" class="rewards" aria-labelledby="reward-heading" hidden>
+      <span class="eyebrow peach">YOU MADE IT, ALI ♡</span>
+      <h2 id="reward-heading">A few things for you.</h2>
+      <div class="reward-tabs" role="tablist" aria-label="Your surprises">
+        <button id="tab-0" type="button" role="tab" aria-selected="true" aria-controls="reward-0" tabindex="0" data-reward="0">01 <span>THE SONG</span></button>
+        <button id="tab-1" type="button" role="tab" aria-selected="false" aria-controls="reward-1" tabindex="-1" data-reward="1">02 <span>THE LETTER</span></button>
+        <button id="tab-2" type="button" role="tab" aria-selected="false" aria-controls="reward-2" tabindex="-1" data-reward="2">03 <span>THE TREAT</span></button>
+      </div>
+      <div id="reward-0" class="reward-panel" role="tabpanel" aria-labelledby="tab-0">
+        <button id="disk-button" class="art-button disk-button" type="button" aria-label="Pause Mundo"><img id="disk" src="assets/sprites/disk.png" alt="A vinyl record with a sunset label"></button>
+        <span class="eyebrow">THE SOUNDTRACK TO OUR RIDE</span><h3>Mundo</h3><p class="artist">IV OF SPADES</p>
+        <button id="music-toggle" class="music-toggle" type="button"><span id="music-symbol" aria-hidden="true">Ⅱ</span><span id="music-label">Pause song</span><span class="audio-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
+      </div>
+      <div id="reward-1" class="reward-panel" role="tabpanel" aria-labelledby="tab-1" hidden>
+        <button id="envelope" class="art-button envelope-button" type="button" aria-label="Open your letter"><img src="assets/sprites/letter.png" alt="An envelope sealed with a heart"></button>
+        <span class="eyebrow">WORDS FROM THE HEART</span><h3>For my dearest Ali.</h3><p>There’s something I want you to know.</p><button id="open-letter" class="primary-button" type="button">Open your letter <span aria-hidden="true">♡</span></button>
+      </div>
+      <div id="reward-2" class="reward-panel" role="tabpanel" aria-labelledby="tab-2" hidden>
+        <img class="jabi-art" src="assets/sprites/jabi.png" alt="100 Pesos for Jabi, with a Jollibee meal">
+        <span class="eyebrow">ONE LAST LITTLE TREAT</span><h3>Jabi, on me.</h3><p>A little happiness after a long ride.<br>₱100 for your Jabi craving. ♡</p>
+      </div>
+      <div class="reward-footer"><button id="next-reward" class="primary-button" type="button">Next surprise <span aria-hidden="true">→</span></button><button id="ride-again" class="text-button" type="button">Take another ride</button></div>
+    </section>
+
+    <dialog id="letter-dialog" class="letter-dialog" aria-labelledby="letter-heading">
+      <div class="letter-header"><div class="letter-header-copy"><span class="eyebrow">FROM THE HEART</span><h2 id="letter-heading">For my dearest Ali <span aria-hidden="true">♡</span></h2></div><button id="close-letter" class="icon-button" type="button" aria-label="Close letter"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <div class="letter-scroll"><img src="assets/sprites/letter_for_ali.png" alt="To my Dearest Ali. Ali I just want you to know that you’re always gon be the love of my life. No matter what happens between us, as long as we wont give up on each other, I know we can be stronger and healthier than before. There is not a day without me thinking of you. I know we aint together but it doesn’t mean i will treat you less. I love you and I will always choose you. Happy 3rd months(ary?) of being part of my life. You make me so much happier. Te amo bien mucho, mi amor &lt;3"></div>
+      <div class="letter-audio"><span class="eyebrow">A MESSAGE, JUST FOR YOU</span><button id="voice-toggle" class="art-button voice-button" type="button" aria-label="Play For my ali" aria-pressed="false"><img id="voice-image" src="assets/ui/play.png" alt="Play"></button><p id="voice-caption" role="status">For my Ali · Tap play to listen</p></div>
+    </dialog>
+
+    <section id="pause-screen" class="pause-screen" aria-labelledby="pause-heading" hidden><div class="floating-card"><span class="eyebrow peach">TAKE A BREATHER</span><h2 id="pause-heading">Your ride can wait.</h2><p>Ready when you are.</p><button id="resume" class="primary-button" type="button">Keep riding <span aria-hidden="true">→</span></button><button id="pause-restart" class="text-button" type="button">Start this ride again</button></div></section>
+    <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+  <audio id="music" src="assets/music/IV%20Of%20Spades%20-%20Mundo.mp3" preload="metadata" loop></audio>
+  <audio id="voice" src="assets/music/For%20my%20ali.m4a" preload="metadata"></audio>
+  <audio id="race-sound" src="assets/music/motor_sound.mp3" preload="auto" loop data-effect="motor"></audio>
+  <audio id="crash-preload" src="assets/music/crash_sound.mp3" preload="auto"></audio>
+  <audio id="cheer-preload" src="assets/music/cheer.mp3" preload="auto"></audio>
+  <script src="play.js" defer></script>
+</body>
+</html>
